@@ -1,0 +1,128 @@
+https://android.googlesource.com/platform/bionic/+/refs/tags/android-9.0.0_r49/libc/arch-arm64/generic/bionic/memcpy_base.S
+
+We are tracing with a big nonnegative size value:
+count = 500 = 0x1F4 = (1 1111 0100)b
+
+assume src = 0x1000, dstin = 0x2000
+
+097: OK
+098: srcend = src + count = 0x1000 + 0x1F4 = 0x11F4
+099: dstend = dstin + count = 0x2000 + 0x1F4 = 0x21F4
+100: OK
+101: Branch if count <= 16 - NOT TAKEN
+102: OK
+103: Branch if count > 96 - TAKEN (to copy_long)
+
+...
+
+176: (copy_long)
+177: tmp1 = dstin & 15 = 0x2000 & 0xF = 0x0
+178: dst = dstin & (~15) = 0x2000 & (~0xF) = 0x2000
+179: D = src[0:15]
+180: OK
+181: OK
+182: A = src[16:31]
+183: dstin[0:15] = D                                            // Total 16 bytes copied
+184: B = src[32:47]
+185: C = src[48:63]
+186: D = src[64:79], src = src[64:] = 0x1000 + 0x40 = 0x1040
+187: count = count - (128 + 16) = 0x1F4 - 0x90 = 0x164
+188: Branch if count < 0 - NOT TAKEN
+189: (1)
+190: dst[16:31] = A                                             // Total 32 bytes copied
+191: A = src[16:31]
+192: dst[32:47] = B                                             // Total 48 bytes copied
+193: B = src[32:47]
+194: dst[48:63] = C                                             // Total 64 bytes copied
+195: C = src[48:63]
+196: dst[64:79] = D, dst = dst[64:] = 0x2000 + 0x40 = 0x2040    // Total 80 bytes copied
+197: D = src[64:79], src = src[64:] = 0x1040 + 0x40 = 0x1080
+198: count = count - 64 = 0x164 - 0x40 = 0x124
+199: Branch if count > 0 - TAKEN (to 1)
+
+...
+
+189: (1)
+190: dst[16:31] = A                                             // Total 96 bytes copied
+191: A = src[16:31]
+192: dst[32:47] = B                                             // Total 112 bytes copied
+193: B = src[32:47]
+194: dst[48:63] = C                                             // Total 128 bytes copied
+195: C = src[48:63]
+196: dst[64:79] = D, dst = dst[64:] = 0x2040 + 0x40 = 0x2080    // Total 144 bytes copied
+197: D = src[64:79], src = src[64:] = 0x1080 + 0x40 = 0x10C0
+198: count = count - 64 = 0x124 - 0x40 = 0xE4
+199: Branch if count > 0 - TAKEN (to 1)
+
+...
+
+189: (1)
+190: dst[16:31] = A                                             // Total 160 bytes copied
+191: A = src[16:31]
+192: dst[32:47] = B                                             // Total 176 bytes copied
+193: B = src[32:47]
+194: dst[48:63] = C                                             // Total 192 bytes copied
+195: C = src[48:63]
+196: dst[64:79] = D, dst = dst[64:] = 0x2080 + 0x40 = 0x20C0    // Total 208 bytes copied
+197: D = src[64:79], src = src[64:] = 0x10C0 + 0x40 = 0x1100
+198: count = count - 64 = 0xE4 - 0x40 = 0xA4
+199: Branch if count > 0 - TAKEN (to 1)
+
+...
+
+189: (1)
+190: dst[16:31] = A                                             // Total 224 bytes copied
+191: A = src[16:31]
+192: dst[32:47] = B                                             // Total 240 bytes copied
+193: B = src[32:47]
+194: dst[48:63] = C                                             // Total 256 bytes copied
+195: C = src[48:63]
+196: dst[64:79] = D, dst = dst[64:] = 0x20C0 + 0x40 = 0x2100    // Total 272 bytes copied
+197: D = src[64:79], src = src[64:] = 0x1100 + 0x40 = 0x1140
+198: count = count - 64 = 0xA4 - 0x40 = 0x64
+199: Branch if count > 0 - TAKEN (to 1)
+
+...
+
+189: (1)
+190: dst[16:31] = A                                             // Total 288 bytes copied
+191: A = src[16:31]
+192: dst[32:47] = B                                             // Total 304 bytes copied
+193: B = src[32:47]
+194: dst[48:63] = C                                             // Total 320 bytes copied
+195: C = src[48:63]
+196: dst[64:79] = D, dst = dst[64:] = 0x2100 + 0x40 = 0x2140    // Total 336 bytes copied
+197: D = src[64:79], src = src[64:] = 0x1140 + 0x40 = 0x1180
+198: count = count - 64 = 0x64 - 0x40 = 0x24
+199: Branch if count > 0 - TAKEN (to 1)
+
+...
+
+189: (1)
+190: dst[16:31] = A                                             // Total 352 bytes copied
+191: A = src[16:31]
+192: dst[32:47] = B                                             // Total 368 bytes copied
+193: B = src[32:47]
+194: dst[48:63] = C                                             // Total 384 bytes copied
+195: C = src[48:63]
+196: dst[64:79] = D, dst = dst[64:] = 0x2140 + 0x40 = 0x2180    // Total 400 bytes copied
+197: D = src[64:79], src = src[64:] = 0x1180 + 0x40 = 0x11C0    // Only 52 bytes left to read
+198: count = count - 64 = 0x24 - 0x40 = 0xFFFFFFFFFFFFFFE4      // We passed the count by -28 bytes
+199: Branch if count > 0 - NOT TAKEN
+200: OK
+201: OK
+202: OK
+203: OK
+204: (2)
+205: E = srcend[-64:-49] = src[-12:3]
+206: dst[16:31] = A                                             // Total 416 bytes copied
+207: A = src[4:19]
+208: dst[32:47] = B                                             // Total 432 bytes copied
+209: B = src[20:35]
+210: dst[48:63] = C                                             // Total 448 bytes copied
+211: C = src[36:51]
+212: dst[64:79] = D                                             // Total 464 bytes copied
+213: dstend[-64:-49] = dst[52:67] = E                           // Total 464 bytes copied (due to full overlap)
+214: dstend[-48:-33] = dst[68:83] = A                           // Total 468 bytes copied (due to 12-byte overlap)
+215: dstend[-32:-17] = dst[84:99] = B                           // Total 484 bytes copied
+216: dstend[-16:-1] = dst[100:115] = C                          // Total 500 bytes copied
