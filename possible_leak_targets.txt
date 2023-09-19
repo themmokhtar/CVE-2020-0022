@@ -1,0 +1,191 @@
+~: [*] 0x0000007911153818 0x0000007886a8af80 0x0000007911153ef8 0x0000007886a8afa0 .8..y.......x....>..y.......x...
+(gdb) i sym 0x0000007911153818
+vtable for DeathRecipientList + 16 in section .data.rel.ro of target:/system/lib64/libandroid_runtime.so
+(gdb) i sym 0x0000007911153ef8
+vtable for android::List<android::sp<JavaDeathRecipient> > + 16 in section .data.rel.ro of target:/system/lib64/libandroid_runtime.so
+
+
+~: [*] 0x0000000000000000 0x0000000000650063 0x0000007911153818 0x0000007888565d60 ........c.e......8..y...`]V.x...
+~: [*] 0x0000007911153ef8 0x0000007888565d80 0x0000000000000000 0x0000000000000000 .>..y....]V.x...................
+~: [*] 0x0000000000000000 0x0000000000000000 0x0000000000000000 0x0000000000000000 ................................
+~: [*] 0x0000007911153818 0x0000007888565dc0 0x0000007911153ef8 0x0000007888565de0 .8..y....]V.x....>..y....]V.x...
+(gdb) i sym 0x0000007911153818
+vtable for DeathRecipientList + 16 in section .data.rel.ro of target:/system/lib64/libandroid_runtime.so
+(gdb) i sym 0x0000007888565d60
+No symbol matches 0x0000007888565d60.
+(gdb) i sym 0x0000007911153ef8
+vtable for android::List<android::sp<JavaDeathRecipient> > + 16 in section .data.rel.ro of target:/system/lib64/libandroid_runtime.so
+(gdb) i sym 0x0000007888565d80
+No symbol matches 0x0000007888565d80.
+
+
+~: [*] 0x0000000000000000 0x0000000000000000 0x0000000000000000 0x0000000000000000 ................................
+~: [*] 0x0000000000000000 0x0064000000720065 0x0000007912c3e398 0x0000000000000000 ........e.r...d.....y...........
+~: [*] 0x0000000011153ef8 0x0000000000018bf1 0x0000000000000000 0x0000000000000000 .>..............................
+~: [*] 0x0000000000000000 0x0000000000000000 0x0000000000000000 0x0000000000000000 ................................
+(gdb) i sym 0x0000007912c3e398
+vtable for android::RefBase + 16 in section .data.rel.ro of target:/system/lib64/libutils.so
+
+~: [*] 0x0000000000002000 0x006f000000000003 0x0000000000000000 0x0000006500630069 . ............o.........i.c.e...
+~: [*] 0x00000074ebc34698 0x0000000000000002 0x00000075093d87c0 0x000000000000265a .F..t.............=.u...Z&......
+~: [*] 0x0000000000000000 0x0000000000000000 0x0000000000000000 0x0000000000000000 ................................
+
+(gdb) i sym 0x00000074ebc34698
+vtable for base::internal::MessageLoopTaskRunner + 16 in section .data.rel.ro of target:/system/lib64/libchrome.so
+
+~: [*] 0x0000000000000000 0x0000000000000000 0x0000000000000000 0x0000000000000000 ................................
+~: [*] 0x0000000000000000 0x00000074eb6bf92c 0x00000074eb6bfc7c 0x00000074ebb566b8 ........,.k.t...|.k.t....f..t...
+~: [*] 0x00000074eb6bc534 0x0000000007d05006 0x0000000000000707 0x00000074eb6bd12c 4.k.t....P..............,.k.t...
+~: [*] 0x0000000000000004 0x0065006300690076 0x000000758d323818 0x00000074ff757960 ........v.i.c.e..82.u...`yu.t...
+(gdb) i sym 0x00000074eb6bf92c
+base::internal::Invoker<base::internal::BindState<void (*)(unsigned short, unsigned int, unsigned char, unsigned char, unsigned int (*)(unsigned short, tBTA_JV*, unsigned int), unsigned int), unsigned short, unsigned int, unsigned char, unsigned char, unsigned int (*)(unsigned short, tBTA_JV*, unsigned int), unsigned int>, void ()>::Run(base::internal::BindStateBase*) in section .text of target:/system/lib64/libbluetooth.so
+(gdb) i sym 0x00000074eb6bfc7c
+base::internal::BindState<void (*)(unsigned short, unsigned int, unsigned char, unsigned char, unsigned int (*)(unsigned short, tBTA_JV*, unsigned int), unsigned int), unsigned short, unsigned int, unsigned char, unsigned char, unsigned int (*)(unsigned short, tBTA_JV*, unsigned int), unsigned int>::Destroy(base::internal::BindStateBase const*) in section .text of target:/system/lib64/libbluetooth.so
+(gdb) i sym 0x00000074ebb566b8
+base::internal::(anonymous namespace)::ReturnFalse(base::internal::BindStateBase const*) in section .text of target:/system/lib64/libchrome.so
+(gdb) i sym 0x00000074eb6bc534
+bta_jv_rfcomm_start_server(unsigned short, unsigned int, unsigned char, unsigned char, unsigned int (*)(unsigned short, tBTA_JV*, unsigned int), unsigned int) in section .text of target:/system/lib64/libbluetooth.so
+(gdb) i sym 0x00000074eb6bd12c
+rfcomm_cback(unsigned short, tBTA_JV*, unsigned int) in section .text of target:/system/lib64/libbluetooth.so
+(gdb) 
+
+
+~: [*] 0x0000000000002000 0x00000075096ff000 0x0000000000002000 0x006f000000000003 . ........o.u.... ............o.
+~: [*] 0x0000000000000000 0x0000006500630069 0x00000074ebc34698 0x0000000000000002 ........i.c.e....F..t...........
+~: [*] 0x00000000093d87c0 0x0000000000018bf1 0x0000000000000000 0x0000000000000000 ..=.............................
+(gdb) i sym 0x00000074ebc34698
+vtable for base::internal::MessageLoopTaskRunner + 16 in section .data.rel.ro of target:/system/lib64/libchrome.so
+
+~: [*] 0x0000000000000000 0x0000000000000000 0x0000000000000000 0x0000000000000000 ................................
+~: [*] 0x0000000000000000 0x00000074eb6bf92c 0x00000074eb6bfc7c 0x00000074ebb566b8 ........,.k.t...|.k.t....f..t...
+~: [*] 0x00000074eb6bc534 0x0000000007d05006 0x0000000000000707 0x00000074eb6bd12c 4.k.t....P..............,.k.t...
+~: [*] 0x0000000000000004 0x0065006300690076 0x000000758d323818 0x00000074ff757960 ........v.i.c.e..82.u...`yu.t...
+(gdb) i sym 0x00000074eb6bf92c
+base::internal::Invoker<base::internal::BindState<void (*)(unsigned short, unsigned int, unsigned char, unsigned char, unsigned int (*)(unsigned short, tBTA_JV*, unsigned int), unsigned int), unsigned short, unsigned int, unsigned char, unsigned char, unsigned int (*)(unsigned short, tBTA_JV*, unsigned int), unsigned int>, void ()>::Run(base::internal::BindStateBase*) in section .text of target:/system/lib64/libbluetooth.so
+(gdb) i sym 0x00000074eb6bfc7c
+base::internal::BindState<void (*)(unsigned short, unsigned int, unsigned char, unsigned char, unsigned int (*)(unsigned short, tBTA_JV*, unsigned int), unsigned int), unsigned short, unsigned int, unsigned char, unsigned char, unsigned int (*)(unsigned short, tBTA_JV*, unsigned int), unsigned int>::Destroy(base::internal::BindStateBase const*) in section .text of target:/system/lib64/libbluetooth.so
+(gdb) i sym 0x00000074ebb566b8
+base::internal::(anonymous namespace)::ReturnFalse(base::internal::BindStateBase const*) in section .text of target:/system/lib64/libchrome.so
+(gdb) i sym 0x00000074eb6bc534
+bta_jv_rfcomm_start_server(unsigned short, unsigned int, unsigned char, unsigned char, unsigned int (*)(unsigned short, tBTA_JV*, unsigned int), unsigned int) in section .text of target:/system/lib64/libbluetooth.so
+(gdb) i sym 0x00000074eb6bd12c
+rfcomm_cback(unsigned short, tBTA_JV*, unsigned int) in section .text of target:/system/lib64/libbluetooth.so
+(gdb) 
+
+
+
+
+32-byte chunk packet address leaks:
+~: [*] LOGL_DBG_VAR => src/leak.c:427, in leak_simple_sized: chosen_packet_id = 60
+~: [*] 0x0000007501024141 0x00000074ea0e4840 0x0000007501143e80 0x0000000400021100 AA..u...@H..t....>..u...........
+~: [*] 0x000100100014100e 0x42424242000c3b08 0x4242424242424242 0x0000000400021100 .........;..BBBBBBBBBBBB........
+~: [*] LOGL_DBG_VAR => src/leak.c:391, in leak_packet_address: leaked_handle = 100e
+~: [*] LOGL_DBG_VAR => src/leak.c:403, in leak_packet_address: leaked_list_item->id1 = 0x000100100014100e
+0x0000007501143e80
+
+~: [*] LOGL_DBG_VAR => src/leak.c:427, in leak_simple_sized: chosen_packet_id = 56
+~: [*] 0x0000000000004141 0x0000000000000000 0x00000074ff7c3560 0x0000007501028f08 AA..............`5|.t.......u...
+~: [*] 0x0000007501028f08 0x00000074ea0e4840 0x0000007501143e80 0x0000000400021100 ....u...@H..t....>..u...........
+~: [*] LOGL_DBG_VAR => src/leak.c:391, in leak_packet_address: leaked_handle = 100f
+~: [*] LOGL_DBG_VAR => src/leak.c:403, in leak_packet_address: leaked_list_item->id1 = 0x0000007501028f08
+0x0000007501143e80
+
+~: [*] LOGL_DBG_VAR => src/leak.c:427, in leak_simple_sized: chosen_packet_id = 64
+~: [*] 0x0000000000004141 0x0000000000000000 0x00000074ff7c3560 0x0000007501028f08 AA..............`5|.t.......u...
+~: [*] 0x0000007501028f08 0x00000074ea0e4840 0x0000007501143e80 0x0000000400021100 ....u...@H..t....>..u...........
+~: [*] LOGL_DBG_VAR => src/leak.c:391, in leak_packet_address: leaked_handle = 100f
+~: [*] LOGL_DBG_VAR => src/leak.c:403, in leak_packet_address: leaked_list_item->id1 = 0x0000007501028f08
+0x0000007501143e80
+
+~: [*] LOGL_DBG_VAR => src/leak.c:427, in leak_simple_sized: chosen_packet_id = 50
+~: [*] 0x0000007501024141 0x00000074ea0e4840 0x0000000000000000 0x0000000000000000 AA..u...@H..t...................
+~: [*] 0x0000000000000011 0x00000074ea0e0011 0x00000074ff7e3780 0x0000000400021100 ............t....7~.t...........
+~: [*] LOGL_DBG_VAR => src/leak.c:391, in leak_packet_address: leaked_handle = 1011
+~: [*] LOGL_DBG_VAR => src/leak.c:403, in leak_packet_address: leaked_list_item->id1 = 0x0000000000000011
+0x00000074ff7e3780
+
+~: [*] LOGL_DBG_VAR => src/leak.c:427, in leak_simple_sized: chosen_packet_id = 44
+~: [*] 0x0000007501024141 0x00000074ea0e4840 0x00000000000002b8 0x0000000000000000 AA..u...@H..t...................
+~: [*] 0x0000000000000011 0x00000074ea0e0011 0x0000007501143e80 0x0000000400021100 ............t....>..u...........
+~: [*] LOGL_DBG_VAR => src/leak.c:391, in leak_packet_address: leaked_handle = 1011
+~: [*] LOGL_DBG_VAR => src/leak.c:403, in leak_packet_address: leaked_list_item->id1 = 0x0000000000000011
+0x0000007501143e80
+
+~: [*] LOGL_DBG_VAR => src/leak.c:427, in leak_simple_sized: chosen_packet_id = 52
+~: [*] 0x0000000000004141 0x0000000000000000 0x0000000000000000 0x0000000000000000 AA..............................
+~: [*] 0x0000000000000000 0x0000000000000000 0x0000007501144600 0x0000000400021100 .................F..u...........
+~: [*] LOGL_DBG_VAR => src/leak.c:391, in leak_packet_address: leaked_handle = 1013
+~: [*] LOGL_DBG_VAR => src/leak.c:403, in leak_packet_address: leaked_list_item->id1 = 0x0000000000000000
+0x0000007501144600
+
+~: [*] LOGL_DBG_VAR => src/leak.c:427, in leak_simple_sized: chosen_packet_id = 44
+~: [*] 0x0000007501024141 0x00000074ea0e4840 0x00000000000002b8 0x0000000000000000 AA..u...@H..t...................
+~: [*] 0x0000000000000015 0x00000074ea0e0015 0x0000007501144100 0x0000000400021100 ............t....A..u...........
+~: [*] LOGL_DBG_VAR => src/leak.c:391, in leak_packet_address: leaked_handle = 1015
+~: [*] LOGL_DBG_VAR => src/leak.c:403, in leak_packet_address: leaked_list_item->id1 = 0x0000000000000015
+0x0000007501144100
+
+~: [*] LOGL_DBG_VAR => src/leak.c:428, in leak_simple_sized: chosen_packet_id = 70
+~: [*] 0x0000007501024141 0x00000074ea0e4840 0x4242424242424242 0x0000000000000000 AA..u...@H..t...BBBBBBBB........
+~: [*] 0x000000000000000d 0x00000074ea0e000d 0x00000074ff7e3780 0x0000000400021100 ............t....7~.t...........
+~: [*] LOGL_DBG_VAR => src/leak.c:392, in leak_packet_address: leaked_handle = 100d
+~: [*] LOGL_DBG_VAR => src/leak.c:404, in leak_packet_address: leaked_list_item->id1 = 0x000000000000000d
+0x00000074ff7e3780
+
+
+
+LATEST:
+~: [*] LOGL_DBG_VAR => src/leak.c:430, in leak_simple_sized: chosen_packet_id = 58
+~: [*] 0x0000000000004141 0x0000000000000000 0x0000007501143e80 0x0000000000000000 AA...............>..u...........
+~: [*] 0x0000000000000000 0x0000000000000000 0x0000000000000000 0x0000000400021100 ................................
+~: [*] LOGL_DBG_VAR => src/leak.c:394, in leak_packet_address: leaked_handle = 1012
+~: [*] LOGL_DBG_VAR => src/leak.c:406, in leak_packet_address: leaked_list_item->id1 = 0x0000000000000000
+0x0000007501143e80
+
+~: [*] LOGL_DBG_VAR => src/leak.c:430, in leak_simple_sized: chosen_packet_id = 50
+~: [*] 0x0000000000004141 0x0000000000000000 0x0000000000000000 0x0000000000000000 AA..............................
+~: [*] 0x0000000000000003 0x00000074ea0e0003 0x00000074ff7e3500 0x0000000400021100 ............t....5~.t...........
+~: [*] LOGL_DBG_VAR => src/leak.c:394, in leak_packet_address: leaked_handle = 1003
+~: [*] LOGL_DBG_VAR => src/leak.c:406, in leak_packet_address: leaked_list_item->id1 = 0x0000000000000003
+0x00000074ff7e3500
+
+~: [*] LOGL_DBG_VAR => src/leak.c:430, in leak_simple_sized: chosen_packet_id = 44
+~: [*] 0x0000007501024141 0x00000074ea0e4840 0x0000000000000000 0x0000000000000000 AA..u...@H..t...................
+~: [*] 0x0000000000000005 0x00000074ea0e0005 0x00000074ff7e3280 0x0000000400021100 ............t....2~.t...........
+~: [*] LOGL_DBG_VAR => src/leak.c:394, in leak_packet_address: leaked_handle = 1005
+~: [*] LOGL_DBG_VAR => src/leak.c:406, in leak_packet_address: leaked_list_item->id1 = 0x0000000000000005
+0x00000074ff7e3280
+
+~: [*] LOGL_DBG_VAR => src/leak.c:430, in leak_simple_sized: chosen_packet_id = 44
+~: [*] 0x0000000000004141 0x00000074ea0e0007 0x0000007501144380 0x0000007501028f08 AA..........t....C..u.......u...
+~: [*] 0x0000007501028f08 0x00000074ea0e4840 0x0000000000000000 0x0000000400021100 ....u...@H..t...................
+~: [*] LOGL_DBG_VAR => src/leak.c:394, in leak_packet_address: leaked_handle = 1007
+~: [*] LOGL_DBG_VAR => src/leak.c:406, in leak_packet_address: leaked_list_item->id1 = 0x0000007501028f08
+0x0000007501144380
+
+
+
+one malloc:
+
+0x0000007501028f08 0x0000007501028f08 0x00000074ea0e4840 (0x0000007501144d80)
+0x0000000100000001 0x0000007502a23ae0 0x0000007400000000 (0x0000007501144d80)
+0x0000000000000000 0x0000000000000000 0x0000000000000000 (0x0000007501144380)
+0x0000000000000000 0x0000000000000000 0x0000000000000000 (0x0000007501143e80)
+0x0000000000000000 0x0000000000000000 0x0000000000000000 (0x00000074ff7e3280) [Must be aligned]
+0x0000000000000000 0x0000000000000015 0x000000ea740e0015 (0x0000007501144380)
+0x0000000000000000 0x0000000000000001 0x00000074ea0e0001 (0x0000007501144380)
+0x0000000000000000 0x0000000000000001 0x00000074ea0e0001 (0x0000007501144880)
+0x0000000000000000 0x0000000000000000 0x0000000000000000 (0x0000007501144380)
+0x0000000000000000 0x0000000000000002 0x00000074ea0e0002 (0x0000007501144d80)
+0x0000000000000000 0x0000000000000002 0x00000074ea0e0002 (0x0000007501144600)
+0x0000000000000000 0x0000000000000000 0x0000000000000000 (0x000000750116a800) 
+0x0000007501028f08 0x0000007501028f08 0x00000074ea0e4840 (0x00000074ff6b5a00)
+0x0000000000000000 0x0000000000000004 0x00000074ea0e0004 (0x0000007501144b00)
+0x0000000000000000 0x0000000000000005 0x00000074ea0e0005 (0x0000007501144600)
+0x0000000000000000 0x0000000000000002 0x00000074ea0e0002 (0x0000007501143c00)
+0x0000000000000000 0x0000000000000002 0x00000074ea0e0002 (0x0000007501144d80)
+0x0000000400021100 0x00010006000a1002 0x0000424200023d08 (0x0000007501144d80)
+0x0000000000000000 0x0000000000000003 0x00000074ea0e0003 (0x0000007501144d80)
+0x0000007502b1fce0 0x0000007509321000 0x0000007501164400 (0x0000007501144d80)
+0x0000000000000000 0x0000000000000003 0x00000074ea0e0003 (0x0000007501143c00)
+0x0000000400021100 0x00010006000a1003 0x0000424200023708 (0x0000007501144d80)

@@ -1,0 +1,65 @@
+warning: section .dynamic not found in .gnu_debugdata for target:/data/dalvik-cache/arm64/system@app@Bluetooth@Bluetooth.apk@classes.dex
+0x000000758c831994 in __epoll_pwait () from target:/system/lib64/libc.so
+Breakpoint 1 at 0x74eb4af3cc (2 locations)
+Breakpoint 2 at 0x74eb4abc7c (2 locations)
+Breakpoint 3 at 0x74eb4af92c
+Breakpoint 4 at 0x74eb4af930
+Breakpoint 5 at 0x74eb4af7fc
+
+Thread 22 "BluetoothAdvert" received signal SIGSEGV, Segmentation fault.
+[Switching to Thread 0x225e (LWP 8798)]
+0x000000758c957474 in android::IPCThreadState::flushCommands() () from target:/system/lib64/libbinder.so
+(gdb) bt
+#0  0x000000758c957474 in android::IPCThreadState::flushCommands() () from target:/system/lib64/libbinder.so
+#1  0x0000000071d00bb4 in android.content.res.AssetManager.nativeVerifySystemIdmaps [DEDUPED] () from target:/system/framework/arm64/boot-framework.oat
+#2  0x00000000723df17c in android.os.MessageQueue.next () from target:/system/framework/arm64/boot-framework.oat
+#3  0x00000000723dcb30 in android.os.Looper.loop () from target:/system/framework/arm64/boot-framework.oat
+#4  0x00000000723dbc44 in android.os.HandlerThread.run () from target:/system/framework/arm64/boot-framework.oat
+#5  0x000000750911fb8c in art_quick_invoke_stub () from target:/system/lib64/libart.so
+#6  0x0000007508ca969c in art::ArtMethod::Invoke(art::Thread*, unsigned int*, unsigned int, art::JValue*, char const*) () from target:/system/lib64/libart.so
+#7  0x0000007509029528 in art::(anonymous namespace)::InvokeWithArgArray(art::ScopedObjectAccessAlreadyRunnable const&, art::ArtMethod*, art::(anonymous namespace)::ArgArray*, art::JValue*, char const*) () from target:/system/lib64/libart.so
+#8  0x000000750902a5f4 in art::InvokeVirtualOrInterfaceWithJValues(art::ScopedObjectAccessAlreadyRunnable const&, _jobject*, _jmethodID*, jvalue*) () from target:/system/lib64/libart.so
+#9  0x0000007509054e14 in art::Thread::CreateCallback(void*) () from target:/system/lib64/libart.so
+#10 0x000000758c8451e4 in __pthread_start(void*) () from target:/system/lib64/libc.so
+#11 0x000000758c7e617c in __start_thread () from target:/system/lib64/libc.so
+(gdb) i r
+x0             0x7501173ec0        502529474240
+x1             0x74ea80ce34        502150516276
+x2             0x0                 0
+x3             0x0                 0
+x4             0x13100b44          319818564
+x5             0xffffffff          4294967295
+x6             0x6fe0eca8          1877011624
+x7             0x6fe3f8d8          1877211352
+x8             0x4242              16962
+x9             0x1                 1
+x10            0x1                 1
+x11            0x1343fc55          323222613
+x12            0x1                 1
+x13            0x341555ac          873813420
+x14            0x18                24
+x15            0x16de8e4544b       1571570340939
+x16            0x758d330d58        504880106840
+x17            0x758c957460        504869778528
+x18            0x7509127050        502663376976
+x19            0x7501173ec0        502529474240
+x20            0x758d2129e8        504878934504
+x21            0xffffffff          4294967295
+x22            0x0                 0
+x23            0x1                 1
+x24            0x4                 4
+x25            0x7fffffff          2147483647
+x26            0x13100b40          319818560
+x27            0x750103e380        502528205696
+x28            0x6fe30158          1877147992
+x29            0x74ea80ce10        502150516240
+x30            0x71d00bb4          1909459892
+sp             0x74ea80ce00        0x74ea80ce00
+pc             0x758c957474        0x758c957474 <android::IPCThreadState::flushCommands()+20>
+cpsr           0x60000000          [ EL=0 BTYPE=0 C Z ]
+fpsr           0x13                [ IOC DZC IXC ]
+fpcr           0x0                 [ Len=0 Stride=0 RMode=0 ]
+tpidr          0x74ea80d588        0x74ea80d588
+tpidr2         0x0                 0x0
+(gdb) 
+
