@@ -1,0 +1,13 @@
+#pragma once
+
+#include "errors.h"
+
+#include <stdint.h>
+
+#include <bluetooth/bluetooth.h>
+
+err_t smash_crash_target(bdaddr_t bdaddr, uint8_t *const packet_id);
+// err_t smash_crash_target(const int hci_sock_fd, const uint16_t hci_handle, const int l2cap_sock_fd, uint8_t *const packet_id);
+// err_t smash_corrupt_libchrome_vtable(const int hci_sock_fd, const uint16_t hci_handle, const int l2cap_sock_fd, uint8_t *const packet_id, uint64_t fake_vtable_address);
+// err_t smash_corrupt_libchrome_vtable(const int hci_sock_fd, const char *bdaddr_str, uint8_t *const packet_id, uint64_t fake_vtable_address);
+err_t smash_corrupt_libchrome_vtable(const bdaddr_t bdaddr, uint8_t *const packet_id, uint64_t fake_vtable_address);
